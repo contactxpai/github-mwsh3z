@@ -83,24 +83,20 @@ export default function Contact() {
       timestamp: new Date().toISOString(),
     };
 
-    // In production, use the Zapier webhook directly, otherwise use the proxy
-    const submitUrl = import.meta.env.PROD 
-      ? 'https://hooks.zapier.com/hooks/catch/20833354/2iundv1/'
-      : '/api/submit-form';
-
     try {
-      const response = await fetch(submitUrl, {
+      // Create a new form data object
+      const formDataObj = new FormData();
+      formDataObj.append('payload', JSON.stringify(formPayload));
+
+      // Send as form data instead of JSON
+      const response = await fetch('https://hooks.zapier.com/hooks/catch/20833354/2iundv1/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formPayload),
+        mode: 'no-cors', // This is important for production
+        body: formDataObj,
       });
 
-      if (!import.meta.env.PROD && !response.ok) {
-        throw new Error('Server responded with an error');
-      }
-
+      // Since we're using no-cors, we won't get a proper response
+      // We'll assume success if no error is thrown
       toast.success('ההודעה נשלחה בהצלחה!');
       setFormData({ firstName: '', lastName: '', email: '', message: '' });
       setErrors({});
