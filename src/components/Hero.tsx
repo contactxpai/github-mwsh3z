@@ -37,7 +37,7 @@ export default function Hero() {
             הזמן שלך יקר מדי כדי לבזבז אותו על שגרה
           </h1>
           <p className="text-xl md:text-2xl text-[#cdcbbb] mb-12">
-            מוכנים לצייד את העסק שלכם ב"סופר פאוורס" של בינה מלאכותית?
+            מוכנים לצייד את העסק שלכם ב"Super Powers" של בינה מלאכותית?
           </p>
           <a 
             href="https://calendly.com/contact-xponential-ai/30min"
