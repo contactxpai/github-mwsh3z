@@ -20,11 +20,23 @@ export default function Footer() {
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[#84849b]" />
-                <span className="text-[#cdcbbb]">contact@xponential-ai.com</span>
+                <a 
+                  href="mailto:contact@xponential-ai.com"
+                  className="text-[#cdcbbb] hover:text-[#84849b] transition-colors"
+                >
+                  contact@xponential-ai.com
+                </a>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[#84849b]" />
-                <span className="text-[#cdcbbb]">054-445-1186</span>
+                <a 
+                  href="https://wa.me/972544451186"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#cdcbbb] hover:text-[#84849b] transition-colors"
+                >
+                  054-445-1186
+                </a>
               </div>
             </div>
           </div>
@@ -50,14 +62,13 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-6">עקבו אחרינו</h3>
             <div className="flex gap-4">
-              <a href="#" className="text-[#cdcbbb] hover:text-[#84849b] transition-colors">
+              <a 
+                href="https://www.linkedin.com/in/gabrielrymberg/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-[#cdcbbb] hover:text-[#84849b] transition-colors"
+              >
                 <Linkedin className="w-6 h-6" />
-              </a>
-              <a href="#" className="text-[#cdcbbb] hover:text-[#84849b] transition-colors">
-                <Twitter className="w-6 h-6" />
-              </a>
-              <a href="#" className="text-[#cdcbbb] hover:text-[#84849b] transition-colors">
-                <Facebook className="w-6 h-6" />
               </a>
             </div>
           </div>
@@ -65,7 +76,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="mt-16 pt-8 border-t border-[#84849b]/20 text-center text-[#cdcbbb]">
-          <p>© {new Date().getFullYear()} Xponential AI. כל הזכויות שמורות.</p>
+          <p>© {new Date().getFullYear()} Xponential Solutions. כל הזכויות שמורות.</p>
         </div>
       </div>
     </footer>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import emailjs from '@emailjs/browser';
 import { toast, Toaster } from 'react-hot-toast';
 import { Loader2 } from 'lucide-react';
 
@@ -76,33 +75,31 @@ export default function Contact() {
 
     setIsSubmitting(true);
 
-    try {
-      // Send to EmailJS
-      await emailjs.send(
-        'YOUR_SERVICE_ID',
-        'YOUR_TEMPLATE_ID',
-        {
-          from_name: `${formData.firstName} ${formData.lastName}`,
-          from_email: formData.email,
-          message: formData.message,
-        },
-        'YOUR_PUBLIC_KEY'
-      );
+    const formPayload = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      message: formData.message,
+      timestamp: new Date().toISOString(),
+    };
 
-      // Send to Zapier webhook
-      await fetch('https://hooks.zapier.com/hooks/catch/20833354/2iundv1/', {
+    // In production, use the Zapier webhook directly, otherwise use the proxy
+    const submitUrl = import.meta.env.PROD 
+      ? 'https://hooks.zapier.com/hooks/catch/20833354/2iundv1/'
+      : '/api/submit-form';
+
+    try {
+      const response = await fetch(submitUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-          message: formData.message,
-          timestamp: new Date().toISOString(),
-        }),
+        body: JSON.stringify(formPayload),
       });
+
+      if (!import.meta.env.PROD && !response.ok) {
+        throw new Error('Server responded with an error');
+      }
 
       toast.success('ההודעה נשלחה בהצלחה!');
       setFormData({ firstName: '', lastName: '', email: '', message: '' });

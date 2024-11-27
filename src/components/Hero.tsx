@@ -28,9 +28,9 @@ export default function Hero() {
           
           {/* Logo */}
           <img 
-            src="/images/logo.png" 
-            alt="Xponential AI Logo" 
-            className="w-48 h-auto mx-auto mb-12 animate-float"
+            src="/images/square-logo.png"
+            alt="Company Logo"
+            className="w-32 h-32 mx-auto mb-12 animate-float"
           />
           
           <h1 className="text-5xl md:text-7xl font-bold text-[#f9f8ed] mb-6 tracking-tight">
@@ -39,10 +39,15 @@ export default function Hero() {
           <p className="text-xl md:text-2xl text-[#cdcbbb] mb-12">
             מוכנים לצייד את העסק שלכם ב"סופר פאוורס" של בינה מלאכותית?
           </p>
-          <button className="group bg-[#84849b] text-[#f9f8ed] px-8 py-4 rounded-lg font-semibold text-lg transition-all hover:bg-[#202f5f] hover:shadow-lg hover:shadow-[#84849b]/20 flex items-center gap-2 mx-auto">
-            פגישת ייעוץ ללא עלות
+          <a 
+            href="https://calendly.com/contact-xponential-ai/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group bg-[#84849b] text-[#f9f8ed] px-6 py-2 rounded-lg font-semibold text-lg transition-all hover:bg-[#202f5f] inline-flex items-center gap-2 mx-auto"
+          >
+            לפגישת ייעוץ ללא עלות
             <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
-          </button>
+          </a>
         </div>
       </div>
     </div>

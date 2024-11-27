@@ -31,9 +31,9 @@ export default function Navbar() {
           {/* Logo */}
           <a href="#" className="relative z-10">
             <img 
-              src="/images/logo.png" 
-              alt="Xponential AI" 
-              className="h-12 w-auto"
+              src="/images/purple-banner-logo.png"
+              alt="Company Logo"
+              className="h-16 w-auto"
             />
           </a>
 
@@ -53,7 +53,9 @@ export default function Navbar() {
               </React.Fragment>
             ))}
             <a
-              href="#contact"
+              href="https://calendly.com/contact-xponential-ai/30min"
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-[#84849b] text-[#f9f8ed] px-6 py-2 rounded-lg font-semibold hover:bg-[#202f5f] transition-colors mr-4"
             >
               לפגישת ייעוץ ללא עלות
@@ -84,7 +86,9 @@ export default function Navbar() {
                 </a>
               ))}
               <a
-                href="#contact"
+                href="https://calendly.com/contact-xponential-ai/30min"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-[#84849b] text-[#f9f8ed] px-6 py-3 rounded-lg font-semibold hover:bg-[#202f5f] transition-colors text-center"
                 onClick={() => setIsMenuOpen(false)}
               >
