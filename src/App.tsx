@@ -1,4 +1,4 @@
-import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Intro from './components/Intro';
@@ -10,11 +10,11 @@ import PersonalNote from './components/PersonalNote';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import PrivacyPolicyHebrew from './pages/PrivacyPolicyHebrew';
 
-function App() {
+function HomePage() {
   return (
-    <div className="min-h-screen bg-white">
-      <Navbar />
+    <>
       <Hero />
       <Intro />
       <Imagine />
@@ -23,6 +23,18 @@ function App() {
       <HowToStart />
       <PersonalNote />
       <Contact />
+    </>
+  );
+}
+
+function App() {
+  return (
+    <div className="min-h-screen bg-white">
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/privacy-policy-hebrew" element={<PrivacyPolicyHebrew />} />
+      </Routes>
       <Footer />
       <ScrollToTop />
     </div>

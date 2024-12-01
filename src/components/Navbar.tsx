@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const navItems = [
   { label: 'למה אנחנו', href: '#why-us' },
@@ -11,6 +12,7 @@ const navItems = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,6 +21,12 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.scrollTo(0, 0);
+    navigate('/');
+  };
 
   return (
     <nav
@@ -29,7 +37,11 @@ export default function Navbar() {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="#" className="relative z-10">
+          <a 
+            href="/"
+            onClick={handleLogoClick}
+            className="relative z-10"
+          >
             <img 
               src="/images/purple-banner-logo.png"
               alt="Company Logo"

@@ -55,6 +55,16 @@ export default function Footer() {
                   צור קשר
                 </a>
               </li>
+              <li>
+                <a 
+                  href="/privacy-policy-hebrew"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#cdcbbb] hover:text-[#84849b] transition-colors"
+                >
+                  מדיניות פרטיות
+                </a>
+              </li>
             </ul>
           </div>
 
