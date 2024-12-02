@@ -51,9 +51,27 @@ export default function Contact() {
     if (!validateForm()) return;
 
     setIsSubmitting(true);
+
+    const formPayload = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      message: formData.message,
+      timestamp: new Date().toISOString(),
+    };
+
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Create a new form data object
+      const formDataObj = new FormData();
+      formDataObj.append('payload', JSON.stringify(formPayload));
+
+      // Send as form data instead of JSON
+      const response = await fetch('https://hooks.zapier.com/hooks/catch/20833354/2iundv1/', {
+        method: 'POST',
+        mode: 'no-cors', // This is important for production
+        body: formDataObj,
+      });
+
       toast.success(content.contact.form.success);
       setFormData({ firstName: '', lastName: '', email: '', message: '' });
     } catch (error) {
