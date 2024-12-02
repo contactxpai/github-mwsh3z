@@ -11,6 +11,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicyHebrew from './pages/PrivacyPolicyHebrew';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function HomePage() {
   return (
@@ -34,11 +35,11 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/privacy-policy-hebrew" element={<PrivacyPolicyHebrew />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
       <Footer />
       <ScrollToTop />
     </div>
   );
 }
-
 export default App;

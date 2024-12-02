@@ -1,8 +1,17 @@
 import React from 'react';
-import { ArrowLeft } from 'lucide-react';
-// import SplineViewer from './SplineViewer';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { getContent } from '../data/translations';
+import { DirectionalText } from './DirectionalText';
 
 export default function Hero() {
+  const { language } = useLanguage();
+  const content = getContent(language);
+
+  const Arrow = language === 'he' ? ArrowLeft : ArrowRight;
+  const arrowTransform = language === 'he' ? '-translate-x-1' : 'translate-x-1';
+  const textAlign = language === 'he' ? 'text-right' : 'text-left';
+
   return (
     <div className="relative min-h-screen flex items-center overflow-hidden">
       {/* Base gradient */}
@@ -22,33 +31,33 @@ export default function Hero() {
       
       {/* Content */}
       <div className="container mx-auto px-6 py-24 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Spline viewer temporarily disabled */}
-          {/* <SplineViewer /> */}
-          
-          {/* Logo */}
-          <img 
-            src="/images/square-logo.png"
-            alt="Company Logo"
-            className="w-32 h-32 mx-auto mb-12 animate-float"
-          />
+        <DirectionalText className={`max-w-4xl mx-auto ${textAlign}`}>
+          <div className="text-center mb-12">
+            <img 
+              src="/images/square-logo.png"
+              alt="Company Logo"
+              className="w-32 h-32 mx-auto animate-float"
+            />
+          </div>
           
           <h1 className="text-5xl md:text-7xl font-bold text-[#f9f8ed] mb-6 tracking-tight">
-            הזמן שלך יקר מדי כדי לבזבז אותו על שגרה
+            {content.hero.title}
           </h1>
           <p className="text-xl md:text-2xl text-[#cdcbbb] mb-12">
-            מוכנים לצייד את העסק שלכם ב"Super Powers" של בינה מלאכותית?
+            {content.hero.subtitle}
           </p>
-          <a 
-            href="https://calendly.com/contact-xponential-ai/30min"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group bg-[#84849b] text-[#f9f8ed] px-6 py-2 rounded-lg font-semibold text-lg transition-all hover:bg-[#202f5f] inline-flex items-center gap-2 mx-auto"
-          >
-            לפגישת ייעוץ ללא עלות
-            <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
-          </a>
-        </div>
+          <div className={textAlign}>
+            <a 
+              href="https://calendly.com/contact-xponential-ai/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-[#84849b] text-[#f9f8ed] px-6 py-2 rounded-lg font-semibold text-lg transition-all hover:bg-[#202f5f] inline-flex items-center gap-2"
+            >
+              {content.nav.consultationButton}
+              <Arrow className={`w-5 h-5 transition-transform group-hover:${arrowTransform}`} />
+            </a>
+          </div>
+        </DirectionalText>
       </div>
     </div>
   );

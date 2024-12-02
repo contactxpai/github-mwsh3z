@@ -1,58 +1,76 @@
 import React from 'react';
 import { Calendar, Lightbulb, Rocket } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { getContent } from '../data/translations';
+import { DirectionalText } from './DirectionalText';
 
 const steps = [
   {
-    title: 'קבעו פגישה אישית',
-    description: 'נשמח להיפגש ולשמוע על האתגרים והשאיפות שלכם. ללא התחייבות, רק שיחה פתוחה וכנה.',
+    text: 0,
     icon: Calendar
   },
   {
-    title: 'מקבלים תוכנית פעולה',
-    description: 'לאחר הבנת הצרכים שלכם, נבנה יחד תוכנית מותאמת אישית שתביא אתכם לשלב הבא.',
+    text: 1,
     icon: Lightbulb
   },
   {
-    title: 'יוצאים לדרך וממריאים',
-    description: 'אנחנו מלווים אתכם בכל שלב, עד שתראו את התוצאות בשטח. ההצלחה שלכם היא ההצלחה שלנו.',
+    text: 2,
     icon: Rocket
   }
-];
+] as const;
 
 export default function HowToStart() {
+  const { language } = useLanguage();
+  const content = getContent(language);
+  const textAlign = language === 'he' ? 'text-right' : 'text-left';
+  const numberPosition = language === 'he' ? 'right-8' : 'left-8';
+
+  // Get steps and order them based on language
+  const orderedSteps = [...steps];
+  if (language === 'en') {
+    orderedSteps.reverse();
+  }
+
   return (
     <section className="py-24 bg-white" id="how-to-start">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl font-bold text-center text-[#202f5f] mb-16">
-          איך מתחילים?
+          {content.howToStart.title}
         </h2>
         
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {steps.map((step, index) => (
-              <div 
-                key={index} 
-                className="relative group bg-[#f9f8ed] p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                {/* Number indicator */}
-                <div className="absolute -top-4 right-8 w-8 h-8 bg-[#202f5f] rounded-full flex items-center justify-center text-[#f9f8ed] font-bold">
-                  {index + 1}
+            {orderedSteps.map((step, index) => {
+              const stepContent = content.howToStart.steps[step.text];
+              const Icon = step.icon;
+              
+              return (
+                <div 
+                  key={index}
+                  className="relative group bg-[#f9f8ed] p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  {/* Number indicator */}
+                  <div className={`absolute -top-4 ${numberPosition} w-8 h-8 bg-[#202f5f] rounded-full flex items-center justify-center text-[#f9f8ed] font-bold`}>
+                    {step.text + 1}
+                  </div>
+                  
+                  <DirectionalText className={textAlign}>
+                    {/* Header with Icon and Title */}
+                    <div className="flex items-center justify-between mb-6">
+                      <h3 className="text-xl font-bold text-[#202f5f]">
+                        {stepContent.title}
+                      </h3>
+                      <Icon className="w-12 h-12 text-[#202f5f] group-hover:scale-110 transition-transform ml-4" />
+                    </div>
+                    
+                    {/* Description */}
+                    <p className="text-[#84849b] leading-relaxed">
+                      {stepContent.description}
+                    </p>
+                  </DirectionalText>
                 </div>
-                
-                {/* Icon */}
-                <div className="mb-6">
-                  <step.icon className="w-12 h-12 text-[#202f5f] group-hover:scale-110 transition-transform" />
-                </div>
-                
-                {/* Content */}
-                <h3 className="text-xl font-bold text-[#202f5f] mb-4">
-                  {step.title}
-                </h3>
-                <p className="text-[#84849b] leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

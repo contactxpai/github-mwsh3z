@@ -1,92 +1,130 @@
 import React from 'react';
-import { Mail, Phone, Linkedin, Twitter, Facebook } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Mail, Phone, Facebook, Linkedin } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { getContent } from '../data/translations';
+import { DirectionalText } from './DirectionalText';
 
 export default function Footer() {
+  const { language } = useLanguage();
+  const content = getContent(language);
+  const textAlign = language === 'he' ? 'text-right' : 'text-left';
+
+  const renderLink = (link: { text: string; href: string }) => {
+    // If it's a hash link, use anchor tag
+    if (link.href.startsWith('#')) {
+      return (
+        <a
+          href={link.href}
+          className="text-[#cdcbbb] hover:text-white transition-colors"
+        >
+          {link.text}
+        </a>
+      );
+    }
+    // Otherwise use Link for route navigation
+    return (
+      <Link
+        to={link.href}
+        className="text-[#cdcbbb] hover:text-white transition-colors"
+      >
+        {link.text}
+      </Link>
+    );
+  };
+
   return (
     <footer className="bg-[#202f5f] text-[#f9f8ed] py-16">
       <div className="container mx-auto px-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Company Info */}
-          <div>
-            <h3 className="text-xl font-bold mb-6">Xponential AI</h3>
-            <p className="text-[#cdcbbb] leading-relaxed">
-              מובילים את המהפכה הטכנולוגית הבאה בעולם העסקי
-            </p>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h3 className="text-xl font-bold mb-6">יצירת קשר</h3>
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-[#84849b]" />
-                <a 
-                  href="mailto:contact@xponential-ai.com"
-                  className="text-[#cdcbbb] hover:text-[#84849b] transition-colors"
-                >
-                  contact@xponential-ai.com
-                </a>
+        <div className="max-w-6xl mx-auto">
+          <DirectionalText>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+              {/* Company Info */}
+              <div className={textAlign}>
+                <h3 className="text-xl font-bold mb-4">
+                  {content.footer.companyInfo.title}
+                </h3>
+                <p className="text-[#cdcbbb] leading-relaxed">
+                  {content.footer.companyInfo.description}
+                </p>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-[#84849b]" />
-                <a 
-                  href="https://wa.me/972544451186"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#cdcbbb] hover:text-[#84849b] transition-colors"
-                >
-                  054-445-1186
-                </a>
+
+              {/* Contact Info */}
+              <div className={textAlign}>
+                <h3 className="text-xl font-bold mb-4">
+                  {content.footer.contactTitle}
+                </h3>
+                <div className="space-y-3 text-[#cdcbbb]">
+                  <a 
+                    href={`mailto:${content.contact.info.email}`}
+                    className="block hover:text-white transition-colors"
+                  >
+                    <span className="inline-flex items-center gap-2">
+                      <Mail className="w-4 h-4" />
+                      {content.contact.info.email}
+                    </span>
+                  </a>
+                  <a 
+                    href="https://wa.me/972544451186"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block hover:text-white transition-colors"
+                  >
+                    <span className="inline-flex items-center gap-2">
+                      <Phone className="w-4 h-4" />
+                      {content.contact.info.phone}
+                    </span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Quick Links */}
+              <div className={textAlign}>
+                <h3 className="text-xl font-bold mb-4">
+                  {content.footer.quickLinks.title}
+                </h3>
+                <ul className="space-y-2">
+                  {content.footer.quickLinks.links.map((link, index) => (
+                    <li key={index}>
+                      {renderLink(link)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Social Links */}
+              <div className={textAlign}>
+                <h3 className="text-xl font-bold mb-4">
+                  {content.footer.socialTitle}
+                </h3>
+                <div className="flex gap-4">
+                  <a
+                    href="https://www.facebook.com/profile.php?id=61568440656453"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#cdcbbb] hover:text-white transition-colors"
+                  >
+                    <Facebook className="w-6 h-6" />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/company/xponential-ai-il/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#cdcbbb] hover:text-white transition-colors"
+                  >
+                    <Linkedin className="w-6 h-6" />
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-xl font-bold mb-6">קישורים מהירים</h3>
-            <ul className="space-y-3">
-              <li>
-                <a href="#why-us" className="text-[#cdcbbb] hover:text-[#84849b] transition-colors">
-                  למה אנחנו
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className="text-[#cdcbbb] hover:text-[#84849b] transition-colors">
-                  צור קשר
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="/privacy-policy-hebrew"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#cdcbbb] hover:text-[#84849b] transition-colors"
-                >
-                  מדיניות פרטיות
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Social Links */}
-          <div>
-            <h3 className="text-xl font-bold mb-6">עקבו אחרינו</h3>
-            <div className="flex gap-4">
-              <a 
-                href="https://www.linkedin.com/in/gabrielrymberg/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-[#cdcbbb] hover:text-[#84849b] transition-colors"
-              >
-                <Linkedin className="w-6 h-6" />
-              </a>
+            {/* Copyright */}
+            <div className={`mt-16 pt-8 border-t border-[#84849b]/20 ${textAlign}`}>
+              <p className="text-[#cdcbbb]">
+                {content.footer.copyright}
+              </p>
             </div>
-          </div>
-        </div>
-
-        {/* Copyright */}
-        <div className="mt-16 pt-8 border-t border-[#84849b]/20 text-center text-[#cdcbbb]">
-          <p>© {new Date().getFullYear()} Xponential Solutions. כל הזכויות שמורות.</p>
+          </DirectionalText>
         </div>
       </div>
     </footer>

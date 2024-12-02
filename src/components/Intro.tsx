@@ -1,14 +1,26 @@
 import React from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { getContent } from '../data/translations';
+import { DirectionalText } from './DirectionalText';
 
 export default function Intro() {
+  const { language } = useLanguage();
+  const content = getContent(language);
+  const textAlign = language === 'he' ? 'text-right' : 'text-left';
+
   return (
     <section className="py-20 bg-[#f9f8ed]">
       <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto text-center">
+        <DirectionalText className={`max-w-4xl mx-auto ${textAlign}`}>
           <p className="text-2xl md:text-3xl text-[#202f5f] leading-relaxed font-medium">
-            מהפכת הבינה המלאכותית כבר כאן, והיא משנה את חוקי המשחק. <br /><br />אבל האם העסק שלכם מוכן לקפוץ למים וליהנות מהפירות?<br /><br /> אנחנו ב-Xponential AI כאן כדי לוודא שכן!
+            {content.intro.content.split('\n\n').map((paragraph, index) => (
+              <React.Fragment key={index}>
+                {paragraph}
+                <br /><br />
+              </React.Fragment>
+            ))}
           </p>
-        </div>
+        </DirectionalText>
       </div>
     </section>
   );
