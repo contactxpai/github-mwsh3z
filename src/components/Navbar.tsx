@@ -13,6 +13,16 @@ export default function Navbar() {
   const content = getContent(language);
   const location = useLocation();
 
+  // Check if we're on the Next Gen Business page
+  const isNextGenPage = location.pathname === '/next-gen-business';
+
+  // If we're on the Next Gen Business page, force Hebrew
+  useEffect(() => {
+    if (isNextGenPage && language !== 'he') {
+      setLanguage('he');
+    }
+  }, [isNextGenPage, language, setLanguage]);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -54,7 +64,7 @@ export default function Navbar() {
       }`}
     >
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <a 
             href="/"
@@ -64,64 +74,78 @@ export default function Navbar() {
             <img 
               src="/images/purple-banner-logo.png"
               alt="Company Logo"
-              className="h-16 w-auto"
+              className={`w-auto transition-all ${isNextGenPage ? 'h-10' : 'h-12'}`}
             />
           </a>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-4">
-            <DirectionalText>
-              <div className="flex items-center">
-                {navItems.map((item, index) => (
-                  <React.Fragment key={index}>
-                    <a
-                      href={item.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavClick(item.href);
-                      }}
-                      className="text-[#cdcbbb] hover:text-[#84849b] transition-colors text-lg px-4"
-                    >
-                      {item.label}
-                    </a>
-                    {index < navItems.length - 1 && (
-                      <span className="text-[#cdcbbb]/20">|</span>
-                    )}
-                  </React.Fragment>
-                ))}
+          {isNextGenPage ? (
+            // Simplified view for Next Gen Business page (both mobile and desktop)
+            <a
+              href="https://calendly.com/contact-xponential-ai/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#84849b]/90 text-[#f9f8ed] px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#202f5f] transition-all duration-300 hover:shadow-lg"
+            >
+              {content.nav.consultationButton}
+            </a>
+          ) : (
+            <>
+              {/* Desktop Menu */}
+              <div className="hidden md:flex items-center gap-4">
+                <DirectionalText>
+                  <div className="flex items-center">
+                    {navItems.map((item, index) => (
+                      <React.Fragment key={index}>
+                        <a
+                          href={item.href}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleNavClick(item.href);
+                          }}
+                          className="text-[#cdcbbb] hover:text-[#84849b] transition-colors text-lg px-4"
+                        >
+                          {item.label}
+                        </a>
+                        {index < navItems.length - 1 && (
+                          <span className="text-[#cdcbbb]/20">|</span>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </div>
+                </DirectionalText>
+
+                {/* Consultation Button and Language Switcher */}
+                <div className="flex items-center gap-4">
+                  <a
+                    href="https://calendly.com/contact-xponential-ai/30min"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-[#84849b] text-[#f9f8ed] px-6 py-2 rounded-lg font-semibold hover:bg-[#202f5f] transition-colors"
+                  >
+                    {content.nav.consultationButton}
+                  </a>
+                  <button
+                    onClick={() => setLanguage(language === 'en' ? 'he' : 'en')}
+                    className="px-3 py-1 rounded border border-[#84849b] text-[#cdcbbb] hover:bg-[#84849b] hover:text-[#f9f8ed] transition-colors"
+                  >
+                    {language === 'en' ? 'עברית' : 'English'}
+                  </button>
+                </div>
               </div>
-            </DirectionalText>
 
-            {/* Consultation Button and Language Switcher */}
-            <div className="flex items-center gap-4">
-              <a
-                href="https://calendly.com/contact-xponential-ai/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#84849b] text-[#f9f8ed] px-6 py-2 rounded-lg font-semibold hover:bg-[#202f5f] transition-colors"
-              >
-                {content.nav.consultationButton}
-              </a>
+              {/* Mobile Menu Button */}
               <button
-                onClick={() => setLanguage(language === 'en' ? 'he' : 'en')}
-                className="px-3 py-1 rounded border border-[#84849b] text-[#cdcbbb] hover:bg-[#84849b] hover:text-[#f9f8ed] transition-colors"
+                className="md:hidden text-[#f9f8ed]"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                {language === 'en' ? 'עברית' : 'English'}
+                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
-            </div>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-[#f9f8ed]"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+            </>
+          )}
         </div>
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
+        {/* Mobile Menu - Only shown on main site */}
+        {!isNextGenPage && isMenuOpen && (
           <DirectionalText>
             <div className="md:hidden absolute top-20 right-0 left-0 bg-[#202f5f] border-t border-[#84849b]/20 p-6">
               <div className="flex flex-col space-y-4">

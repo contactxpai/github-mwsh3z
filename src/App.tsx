@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicyHebrew from './pages/PrivacyPolicyHebrew';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import NextGenBusiness from './pages/NextGenBusiness';
 
 function HomePage() {
   return (
@@ -28,18 +29,36 @@ function HomePage() {
   );
 }
 
+interface MainLayoutProps {
+  children: React.ReactNode;
+}
+
+function MainLayout({ children }: MainLayoutProps) {
+  return (
+    <>
+      <Navbar />
+      {children}
+      <Footer />
+      <ScrollToTop />
+    </>
+  );
+}
+
 function App() {
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={
+          <MainLayout>
+            <HomePage />
+          </MainLayout>
+        } />
         <Route path="/privacy-policy-hebrew" element={<PrivacyPolicyHebrew />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/next-gen-business" element={<NextGenBusiness />} />
       </Routes>
-      <Footer />
-      <ScrollToTop />
     </div>
   );
 }
+
 export default App;
