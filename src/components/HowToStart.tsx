@@ -4,20 +4,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { getContent } from '../data/translations';
 import { DirectionalText } from './DirectionalText';
 
-const steps = [
-  {
-    text: 0,
-    icon: Calendar
-  },
-  {
-    text: 1,
-    icon: Lightbulb
-  },
-  {
-    text: 2,
-    icon: Rocket
-  }
-] as const;
+const icons = [Calendar, Lightbulb, Rocket];
 
 export default function HowToStart() {
   const { language } = useLanguage();
@@ -25,11 +12,7 @@ export default function HowToStart() {
   const textAlign = language === 'he' ? 'text-right' : 'text-left';
   const numberPosition = language === 'he' ? 'right-8' : 'left-8';
 
-  // Get steps and order them based on language
-  const orderedSteps = [...steps];
-  if (language === 'en') {
-    orderedSteps.reverse();
-  }
+  const steps = content.howToStart.steps;
 
   return (
     <section className="py-24 bg-white" id="how-to-start">
@@ -39,10 +22,9 @@ export default function HowToStart() {
         </h2>
         
         <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {orderedSteps.map((step, index) => {
-              const stepContent = content.howToStart.steps[step.text];
-              const Icon = step.icon;
+          <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 ${language === 'en' ? 'md:flex md:flex-row-reverse' : ''}`}>
+            {steps.map((step, index) => {
+              const Icon = icons[index];
               
               return (
                 <div 
@@ -51,21 +33,21 @@ export default function HowToStart() {
                 >
                   {/* Number indicator */}
                   <div className={`absolute -top-4 ${numberPosition} w-8 h-8 bg-[#202f5f] rounded-full flex items-center justify-center text-[#f9f8ed] font-bold`}>
-                    {step.text + 1}
+                    {index + 1}
                   </div>
                   
                   <DirectionalText className={textAlign}>
                     {/* Header with Icon and Title */}
                     <div className="flex items-center justify-between mb-6">
                       <h3 className="text-xl font-bold text-[#202f5f]">
-                        {stepContent.title}
+                        {step.title}
                       </h3>
                       <Icon className="w-12 h-12 text-[#202f5f] group-hover:scale-110 transition-transform ml-4" />
                     </div>
                     
                     {/* Description */}
                     <p className="text-[#84849b] leading-relaxed">
-                      {stepContent.description}
+                      {step.description}
                     </p>
                   </DirectionalText>
                 </div>

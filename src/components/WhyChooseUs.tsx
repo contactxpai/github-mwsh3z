@@ -9,11 +9,7 @@ export default function WhyChooseUs() {
   const textAlign = language === 'he' ? 'text-right' : 'text-left';
   const numberPosition = language === 'he' ? 'right-4' : 'left-4';
 
-  // Get stages and order them based on language
-  const stages = [...content.whyChooseUs.stages.items];
-  if (language === 'en') {
-    stages.reverse();
-  }
+  const stages = content.whyChooseUs.stages.items;
 
   return (
     <section className="py-24 bg-[#f9f8ed]" id="why-us">
@@ -43,7 +39,7 @@ export default function WhyChooseUs() {
             {content.whyChooseUs.stages.title}
           </h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className={`grid grid-cols-1 md:grid-cols-4 gap-8 ${language === 'en' ? 'md:flex md:flex-row-reverse' : ''}`}>
             {stages.map((stage, index) => (
               <div key={stage.number} className="relative">
                 <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
